@@ -1,7 +1,12 @@
-import React from "react";
+import React from 'react'
+import LoginPage from '@components/login/loginPage'
 
 function App() {
-  return <>React TS</>;
+  return (
+    <div className="app">
+      <LoginPage />
+    </div>
+  )
 }
 
-export default App;
+export default App
