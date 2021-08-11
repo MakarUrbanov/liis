@@ -1,5 +1,5 @@
 {
-  "name": "template_typescript_react-webpack-babel",
+  "name": "liis",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -19,9 +19,6 @@
     "@babel/preset-env": "^7.14.7",
     "@babel/preset-react": "^7.14.5",
     "@babel/preset-typescript": "^7.15.0",
-    "@types/react-helmet": "^6.1.2",
-    "@types/react-router-dom": "^5.1.8",
-    "@types/redux": "^3.6.0",
     "babel-loader": "^8.2.2",
     "clean-webpack-plugin": "^4.0.0-alpha.0",
     "copy-webpack-plugin": "^9.0.1",
@@ -37,15 +34,9 @@
   "dependencies": {
     "@types/react": "^17.0.16",
     "@types/react-dom": "^17.0.9",
-    "axios": "^0.21.1",
     "cross-env": "^7.0.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-helmet": "^6.1.0",
-    "react-router-dom": "^5.2.0",
-    "redux": "^4.1.1",
-    "redux-devtools-extension": "^2.13.9",
-    "redux-thunk": "^2.3.0",
     "typescript": "^4.3.5"
   },
   "prettier": {
