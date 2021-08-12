@@ -1,19 +1,32 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import svg1 from '@/assets/img/Vector1.svg'
 import svg2 from '@/assets/img/Vector3.svg'
 import svg3 from '@/assets/img/Vector2.svg'
-import svgPlane from '@/assets/img/Vector_plane.svg'
-import svg4 from '@/assets/img/Vector4.svg'
-import svg5 from '@/assets/img/Vector5.svg'
-import followFalse from '@/assets/img/Vector-follow_false.svg'
-import followTrue from '@/assets/img/Vector-follow_true.svg'
 import ListItem from '@components/list/listItem'
+import { useDispatch, useSelector } from 'react-redux'
+import { FETCH_FLIGHTS } from '@/store/flightsReducer'
+
+interface DefaultRootState {
+  flightsData: object
+}
 
 const ListPage: React.FC = () => {
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch({ type: FETCH_FLIGHTS })
+  }, [])
+
+  const flightData = useSelector<DefaultRootState>((state) => state.flightsData)
+
+  function logout() {
+    dispatch({ type: 'LOGIN', login: '0' })
+  }
+
   return (
     <div className="list__wrapper">
       <header>
-        <div className="list__header-exit">
+        <div onClick={() => logout()} className="list__header-exit">
           <span>Выйти</span>
           <div className="list__header-exit-svg">
             <img src={svg1} alt="exit part 1" />

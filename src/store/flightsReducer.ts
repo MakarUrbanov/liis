@@ -11,15 +11,18 @@ interface IActionProps {
 
 const flightsStates = {
   flightsData: {},
-  isAuth: '0',
+  isAuth: localStorage.getItem('login') || '0',
   isLoading: false,
+  date: new Date(),
 }
-const GET_FLIGHTS = 'GET_FLIGHTS'
+
+const SET_FLIGHTS = 'SET_FLIGHTS'
 const LOGIN = 'LOGIN'
+export const FETCH_FLIGHTS = 'FETCH_FLIGHTS'
 
 export const flightsReducer = (state = flightsStates, action: IActionProps) => {
   switch (action.type) {
-    case GET_FLIGHTS:
+    case SET_FLIGHTS:
       localStorage.setItem('flights', action.data)
       return {
         ...state,
@@ -29,20 +32,22 @@ export const flightsReducer = (state = flightsStates, action: IActionProps) => {
       localStorage.setItem('login', action.login)
       return {
         ...state,
-        isAuth: action.data,
+        isAuth: action.login,
       }
     default:
       return state
   }
 }
 
-// export const setLogin = (data: IFlightsData) => {
-//   if (data.status === 200) {
-//     return {
-//       type: GET_FLIGHTS,
-//       data: data.data,
-//     }
-//   } else if (data.status > 400) {
-//     throw new Error('Something went wrong')
-//   }
-// }
+export const fetchFlights = () => ({ type: FETCH_FLIGHTS })
+
+export const setFlights = (data: IFlightsData) => {
+  if (data.status === 200) {
+    return {
+      type: SET_FLIGHTS,
+      data: data.data,
+    }
+  } else {
+    throw new Error('Something went wrong')
+  }
+}
