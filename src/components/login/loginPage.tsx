@@ -1,9 +1,13 @@
 import React, { useState } from 'react'
+import axios from 'axios'
+import { useDispatch } from 'react-redux'
 
 const LoginPage: React.FC = () => {
   const [login, setLogin] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [passwordError, setPasswordError] = useState<string>('')
+
+  const dispatch = useDispatch()
 
   const handleLogin = (e: React.ChangeEvent<HTMLInputElement>) =>
     setLogin(e.currentTarget.value)
@@ -39,10 +43,27 @@ const LoginPage: React.FC = () => {
     setPasswordError('')
 
     if (passCheck(pass)) {
-      return console.log('TRUE')
+      const departure = '2021-08-20'
+      getFlights(departure)
+      return dispatch({ type: 'LOGIN', login: '1' })
     }
+    setPassword('')
+  }
 
-    console.log('false')
+  async function getFlights(startDate: string) {
+    try {
+      const flights = await axios({
+        url: `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsedates/v1.0/RU/RUB/en-EN/SVO-sky/JFK-sky/${startDate}`,
+        method: 'GET',
+        headers: {
+          'X-RapidAPI-Key':
+            '0a0a124bdbmsha5a636763687650p1112f0jsn84037de75702',
+        },
+      })
+      console.log(flights)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
