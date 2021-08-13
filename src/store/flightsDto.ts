@@ -35,11 +35,39 @@ interface IFligthDto {
   carrier: string
   follow: boolean
   departure: string
+  departureTime: string
 }
 
 export function flightsDto(object: IFlightsProps): IFligthDto[] {
   let newArr = []
   let flightsCount = object.Quotes.length
+
+  const getRandomTime = () => {
+    let hour = new Date(
+      2021,
+      6,
+      10,
+      Math.random() * 24,
+      Math.random() * 60
+    ).getHours()
+
+    let minutes = new Date(
+      2021,
+      6,
+      10,
+      Math.random() * 24,
+      Math.random() * 60
+    ).getMinutes()
+
+    if (hour.toString().length < 2) {
+      hour = '0' + hour
+    }
+
+    if (minutes.toString().length < 2) {
+      minutes = '0' + minutes
+    }
+    return `${hour}:${minutes}`
+  }
 
   for (let i = 0; i < flightsCount; i++) {
     let departureDate = object.Quotes[i].OutboundLeg.DepartureDate.split('T')
@@ -52,6 +80,7 @@ export function flightsDto(object: IFlightsProps): IFligthDto[] {
       carrier: object.Carriers[i].Name,
       follow: false,
       departure: departureDate[0],
+      departureTime: getRandomTime(),
     }
   }
   return newArr

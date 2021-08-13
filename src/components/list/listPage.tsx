@@ -5,11 +5,13 @@ import svg3 from '@/assets/img/Vector2.svg'
 import ListItem from '@components/list/listItem'
 import { useDispatch, useSelector } from 'react-redux'
 import { FETCH_FLIGHTS, setNewDate } from '@/store/flightsReducer'
+import Slider from '@components/list/slider'
 
 interface DefaultRootState {
   flightsData: []
   date: string
-  followsCount: number
+  followsCount: number | string
+  isLoading: boolean
 }
 
 interface IFlightsProps {
@@ -23,6 +25,7 @@ interface IFlightsProps {
   key: any
   handleFollow: any
   id: any
+  departureTime: string
 }
 
 const ListPage: React.FC = () => {
@@ -34,11 +37,16 @@ const ListPage: React.FC = () => {
   const followsCount = useSelector<DefaultRootState>(
     (state) => state.followsCount
   )
+  const isLoading = useSelector<DefaultRootState>((state) => state.isLoading)
 
   useEffect(() => {
     dispatch({ type: FETCH_FLIGHTS })
     setDate(departureDate)
   }, [])
+
+  useEffect(() => {
+    setDate(departureDate)
+  }, [departureDate])
 
   useEffect(() => {
     return setFlightsList(flightData)
@@ -89,28 +97,34 @@ const ListPage: React.FC = () => {
             <span>Вылеты {'>'} SVO - JFK</span>
             <input type="date" value={date} onChange={(e) => handleDate(e)} />
           </div>
-          <div className="list__slider">SLIDER</div>
+          <Slider />
           <div className="list__result-wrapper">
             <div className="list__result-favorite">
               Добавлено в Избранное: <span>{followsCount}</span> рейсов
             </div>
             <div className="list__result-list">
-              {flightsList.map((item: IFlightsProps, id: number) => {
-                return (
-                  <ListItem
-                    key={id}
-                    symbol={item.symbol}
-                    price={item.price}
-                    from={item.from}
-                    to={item.to}
-                    carrier={item.carrier}
-                    follow={item.follow}
-                    departure={item.departure}
-                    handleFollow={handleFollow}
-                    id={id}
-                  />
-                )
-              })}
+              {isLoading
+                ? 'Loading...'
+                : flightsList.map((item: IFlightsProps, id: number) => {
+                    return (
+                      <ListItem
+                        key={id}
+                        symbol={item.symbol}
+                        price={item.price}
+                        from={item.from}
+                        to={item.to}
+                        carrier={item.carrier}
+                        follow={item.follow}
+                        departure={item.departure}
+                        handleFollow={handleFollow}
+                        id={id}
+                        departureTime={item.departureTime}
+                      />
+                    )
+                  })}
+              {!flightsList.length && !isLoading
+                ? 'Рейсов на выбранный день нет'
+                : ''}
             </div>
           </div>
         </div>

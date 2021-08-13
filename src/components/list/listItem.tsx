@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import svgPlane from '@/assets/img/Vector_plane.svg'
 import svg4 from '@/assets/img/Vector4.svg'
 import svg5 from '@/assets/img/Vector5.svg'
 import followFalse from '@/assets/img/Vector-follow_false.svg'
 import followTrue from '@/assets/img/Vector-follow_true.svg'
+import { useSelector } from 'react-redux'
 
 interface IProps {
   symbol: string
@@ -15,6 +16,11 @@ interface IProps {
   departure: string
   handleFollow: any
   id: any
+  departureTime: string
+}
+
+interface DefaultRootState {
+  isLoading: boolean
 }
 
 const ListItem: React.FC<IProps> = ({
@@ -27,7 +33,10 @@ const ListItem: React.FC<IProps> = ({
   departure,
   handleFollow,
   id,
+  departureTime,
 }) => {
+  const isLoading = useSelector<DefaultRootState>((state) => state.isLoading)
+
   price = price.toString().split('')
   price.splice(-3, 0, ' ')
 
@@ -37,8 +46,6 @@ const ListItem: React.FC<IProps> = ({
 
   let tempDate = new Date(2021, +month - 1, 10)
   month = tempDate.toString().split(' ')[1]
-
-  const randomTime = new Date()
 
   return (
     <div className="list__result-item">
@@ -55,7 +62,7 @@ const ListItem: React.FC<IProps> = ({
           {to}
         </div>
         <div className="list__result-item-body-date">
-          {`${day} ${month}, ${year}`} - 14:50
+          {`${day} ${month}, ${year}`} - {departureTime}
         </div>
         <div className="list__result-item-body-company">{carrier}</div>
       </div>

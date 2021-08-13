@@ -33,6 +33,14 @@ const flightsStates = {
   isLoading: false,
   date: setDate(),
   followsCount: 0,
+  cityPictures: [
+    'https://cdn.pixabay.com/photo/2016/11/06/17/17/north-america-1803504__480.jpg',
+    'https://static5.depositphotos.com/1030808/402/i/600/depositphotos_4025773-stock-photo-new-york-city.jpg',
+    'https://www.interactive-english.ru/imagesforsite/for-descriptions/ny1.jpg',
+    'https://lh3.googleusercontent.com/7Sz3C3F4SctBO9m55QhpUr1t-k6-xkwyTaNCM5Nf-oQLfutc8qg3ag-tlxM-DOOIp6LofCb0E-zwYtEvC-ImawvMFYI=w640-h400-e365-rj-sc0x00ffffff',
+    'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F28%2F2021%2F02%2F19%2Fnew-york-city-evening-NYCTG0221.jpg&w=450&h=302&c=sc&poi=face&q=85',
+    'https://www.telegraph.co.uk/content/dam/Travel/Destinations/North%20America/USA/New%20York/new-york-central-park-aerial.jpg?imwidth=450',
+  ],
 }
 
 const SET_FLIGHTS = 'SET_FLIGHTS'
@@ -88,6 +96,11 @@ export const handleIsLoading = (isLoading: boolean) => ({
 export const dateSelector = (state: IStateSelector) => state.date
 
 export const setFlights = (data: IFlightsData) => {
+  if (!data) {
+    alert("We don't fly in the past :D")
+    return setNewDate(setDate())
+  }
+
   if (data.status === 200) {
     return {
       type: SET_FLIGHTS,
