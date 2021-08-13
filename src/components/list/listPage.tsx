@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import svg1 from '@/assets/img/Vector1.svg'
 import svg2 from '@/assets/img/Vector3.svg'
 import svg3 from '@/assets/img/Vector2.svg'
@@ -12,12 +12,16 @@ interface DefaultRootState {
 
 const ListPage: React.FC = () => {
   const dispatch = useDispatch()
+  const [flightsList, setFlightsList] = useState<object>({})
+  const flightData = useSelector<DefaultRootState>((state) => state.flightsData)
 
   useEffect(() => {
     dispatch({ type: FETCH_FLIGHTS })
   }, [])
 
-  const flightData = useSelector<DefaultRootState>((state) => state.flightsData)
+  useEffect(() => {
+    return setFlightsList((prev: object) => flightData)
+  }, [flightData])
 
   function logout() {
     dispatch({ type: 'LOGIN', login: '0' })
