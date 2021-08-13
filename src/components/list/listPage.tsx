@@ -5,28 +5,11 @@ import svg3 from '@/assets/img/Vector2.svg'
 import ListItem from '@components/list/listItem'
 import { useDispatch, useSelector } from 'react-redux'
 import { FETCH_FLIGHTS, setNewDate } from '@/store/flightsReducer'
-import Slider from '@components/list/slider'
-
-interface DefaultRootState {
-  flightsData: []
-  date: string
-  followsCount: number | string
-  isLoading: boolean
-}
-
-interface IFlightsProps {
-  symbol: string
-  price: number
-  from: string
-  to: string
-  carrier: string
-  follow: boolean
-  departure: string
-  key: any
-  handleFollow: any
-  id: any
-  departureTime: string
-}
+import ListSlider from '@components/list/listSlider'
+import {
+  DefaultRootState,
+  IFlightsProps,
+} from '@components/list/listInterfaces'
 
 const ListPage: React.FC = () => {
   const dispatch = useDispatch()
@@ -34,13 +17,15 @@ const ListPage: React.FC = () => {
   const [date, setDate] = useState<any>('')
   const flightData = useSelector<DefaultRootState>((state) => state.flightsData)
   const departureDate = useSelector<DefaultRootState>((state) => state.date)
-  const followsCount = useSelector<DefaultRootState>(
+  const followsCount: any = useSelector<DefaultRootState>(
     (state) => state.followsCount
   )
   const isLoading = useSelector<DefaultRootState>((state) => state.isLoading)
+  const [minDate, setMinDate] = useState<any>('')
 
   useEffect(() => {
     dispatch({ type: FETCH_FLIGHTS })
+    setMinDate(departureDate)
     setDate(departureDate)
   }, [])
 
@@ -95,33 +80,42 @@ const ListPage: React.FC = () => {
         <div className="list__field">
           <div className="list__field-description">
             <span>Вылеты {'>'} SVO - JFK</span>
-            <input type="date" value={date} onChange={(e) => handleDate(e)} />
+            <input
+              min={minDate}
+              type="date"
+              value={date}
+              onChange={(e) => handleDate(e)}
+            />
           </div>
-          <Slider />
+          <ListSlider />
           <div className="list__result-wrapper">
             <div className="list__result-favorite">
               Добавлено в Избранное: <span>{followsCount}</span> рейсов
             </div>
             <div className="list__result-list">
-              {isLoading
-                ? 'Loading...'
-                : flightsList.map((item: IFlightsProps, id: number) => {
-                    return (
-                      <ListItem
-                        key={id}
-                        symbol={item.symbol}
-                        price={item.price}
-                        from={item.from}
-                        to={item.to}
-                        carrier={item.carrier}
-                        follow={item.follow}
-                        departure={item.departure}
-                        handleFollow={handleFollow}
-                        id={id}
-                        departureTime={item.departureTime}
-                      />
-                    )
-                  })}
+              {isLoading ? (
+                <div className="list__loader">
+                  <span>Loading...</span>
+                </div>
+              ) : (
+                flightsList.map((item: IFlightsProps, id: number) => {
+                  return (
+                    <ListItem
+                      key={id}
+                      symbol={item.symbol}
+                      price={item.price}
+                      from={item.from}
+                      to={item.to}
+                      carrier={item.carrier}
+                      follow={item.follow}
+                      departure={item.departure}
+                      handleFollow={handleFollow}
+                      id={id}
+                      departureTime={item.departureTime}
+                    />
+                  )
+                })
+              )}
               {!flightsList.length && !isLoading
                 ? 'Рейсов на выбранный день нет'
                 : ''}

@@ -7,14 +7,6 @@ import {
   setFlights,
 } from '@/store/flightsReducer'
 
-interface IStoreProps {
-  date: string
-}
-
-interface IRootState {
-  departure: string
-}
-
 async function getFlights(departureDate: string): Promise<any> {
   try {
     const flights = await axios({
@@ -32,9 +24,11 @@ async function getFlights(departureDate: string): Promise<any> {
 
 function* getFlightsWorker(): any {
   yield put(handleIsLoading(true))
+
   const departureDate = yield select(dateSelector)
   const data = yield call(getFlights, departureDate)
   yield put(setFlights(data))
+
   yield put(handleIsLoading(false))
 }
 

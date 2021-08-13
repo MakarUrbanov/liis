@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
-import axios from 'axios'
 import { useDispatch } from 'react-redux'
-import { FETCH_FLIGHTS, fetchFlights } from '@/store/flightsReducer'
 
 const LoginPage: React.FC = () => {
   const [login, setLogin] = useState<string>('')

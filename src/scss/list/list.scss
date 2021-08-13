@@ -305,6 +305,7 @@ header {
 
   box-shadow: inset -10px 0 10px white;
 }
+
 .list__slider_shadow-left {
   position: absolute;
   height: 100%;
@@ -313,4 +314,16 @@ header {
   left: 0;
   transition: 0.5s;
   box-shadow: inset 10px 0 10px white;
+}
+
+.list__loader {
+  width: 100%;
+  height: 160px;
+  text-align: center;
+  background-color: #fafafa;
+
+  span {
+    display: block;
+    margin: auto 0;
+  }
 }

@@ -1,22 +1,5 @@
 import { flightsDto } from '@/store/flightsDto'
-
-interface IFlightsData {
-  status: number
-  data: object
-}
-
-interface IActionProps {
-  type: string
-  data: any
-  login: '1' | '0'
-  isLoading: boolean
-  newDate: string
-  followsCount: number
-}
-
-interface IStateSelector {
-  date: string
-}
+import { IActionProps, IFlightsData, IStateSelector } from '@/store/interfaces'
 
 function setDate() {
   let date: any = new Date().toLocaleDateString()
@@ -51,7 +34,10 @@ const SET_DATE = 'SET_DATE'
 const FOLLOWS_INCREMENT = 'FOLLOWS_INCREMENT'
 const FOLLOWS_DECREMENT = 'FOLLOWS_DECREMENT'
 
-export const flightsReducer = (state = flightsStates, action: IActionProps) => {
+export const flightsReducer: any = (
+  state = flightsStates,
+  action: IActionProps
+) => {
   switch (action.type) {
     case SET_FLIGHTS:
       const data = flightsDto(action.data)

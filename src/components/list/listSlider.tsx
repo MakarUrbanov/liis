@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
+import { IStatesProps } from '@components/list/listInterfaces'
 
-interface IStatesProps {
-  cityPictures: string[]
-}
-
-const Slider = () => {
+const ListSlider = () => {
   const cityPictures: any = useSelector<IStatesProps>(
     (state) => state.cityPictures
   )
@@ -84,4 +81,4 @@ const Slider = () => {
   )
 }
 
-export default Slider
+export default ListSlider

@@ -1,27 +1,10 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import svgPlane from '@/assets/img/Vector_plane.svg'
 import svg4 from '@/assets/img/Vector4.svg'
 import svg5 from '@/assets/img/Vector5.svg'
 import followFalse from '@/assets/img/Vector-follow_false.svg'
 import followTrue from '@/assets/img/Vector-follow_true.svg'
-import { useSelector } from 'react-redux'
-
-interface IProps {
-  symbol: string
-  price: number | string | string[]
-  from: string
-  to: string
-  carrier: string
-  follow: boolean
-  departure: string
-  handleFollow: any
-  id: any
-  departureTime: string
-}
-
-interface DefaultRootState {
-  isLoading: boolean
-}
+import { IProps } from '@components/list/listInterfaces'
 
 const ListItem: React.FC<IProps> = ({
   symbol,
@@ -35,8 +18,6 @@ const ListItem: React.FC<IProps> = ({
   id,
   departureTime,
 }) => {
-  const isLoading = useSelector<DefaultRootState>((state) => state.isLoading)
-
   price = price.toString().split('')
   price.splice(-3, 0, ' ')
 

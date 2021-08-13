@@ -1,63 +1,21 @@
-type CurrenciesType = {
-  Symbol: string
-}
-
-type PlacesType = {
-  CityName: string
-  IataCode: string
-}
-
-type QuotesType = {
-  MinPrice: number
-  OutboundLeg: OutboundLeg
-}
-
-type OutboundLeg = {
-  DepartureDate: string
-}
-
-type CarriersType = {
-  Name: string
-}
-
-interface IFlightsProps {
-  Carriers: CarriersType[]
-  Quotes: QuotesType[]
-  Currencies: CurrenciesType[]
-  Places: PlacesType[]
-}
-
-interface IFligthDto {
-  symbol: string
-  price: number
-  from: string
-  to: string
-  carrier: string
-  follow: boolean
-  departure: string
-  departureTime: string
-}
+import { IFlightsProps, IFligthDto } from '@/store/interfaces'
 
 export function flightsDto(object: IFlightsProps): IFligthDto[] {
   let newArr = []
   let flightsCount = object.Quotes.length
 
   const getRandomTime = () => {
-    let hour = new Date(
+    const time: any = new Date(
       2021,
       6,
       10,
       Math.random() * 24,
       Math.random() * 60
-    ).getHours()
+    )
 
-    let minutes = new Date(
-      2021,
-      6,
-      10,
-      Math.random() * 24,
-      Math.random() * 60
-    ).getMinutes()
+    let hour = time.getHours()
+
+    let minutes = time.getMinutes()
 
     if (hour.toString().length < 2) {
       hour = '0' + hour
