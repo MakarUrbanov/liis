@@ -10,6 +10,8 @@ interface IActionProps {
   data: any
   login: '1' | '0'
   isLoading: boolean
+  newDate: string
+  followsCount: number
 }
 
 interface IStateSelector {
@@ -26,16 +28,20 @@ function setDate() {
 }
 
 const flightsStates = {
-  flightsData: {},
+  flightsData: [],
   isAuth: localStorage.getItem('login') || '0',
   isLoading: false,
   date: setDate(),
+  followsCount: 0,
 }
 
 const SET_FLIGHTS = 'SET_FLIGHTS'
 const LOGIN = 'LOGIN'
 export const FETCH_FLIGHTS = 'FETCH_FLIGHTS'
 const SET_ISLOADING = 'SET_ISLOADING'
+const SET_DATE = 'SET_DATE'
+const FOLLOWS_INCREMENT = 'FOLLOWS_INCREMENT'
+const FOLLOWS_DECREMENT = 'FOLLOWS_DECREMENT'
 
 export const flightsReducer = (state = flightsStates, action: IActionProps) => {
   switch (action.type) {
@@ -52,17 +58,29 @@ export const flightsReducer = (state = flightsStates, action: IActionProps) => {
         isAuth: action.login,
       }
     case SET_ISLOADING:
-      console.log(action.isLoading)
       return {
         ...state,
         isLoading: action.isLoading,
       }
+    case SET_DATE:
+      return {
+        ...state,
+        date: action.newDate,
+      }
+    case FOLLOWS_INCREMENT:
+      return { ...state, followsCount: state.followsCount + 1 }
+    case FOLLOWS_DECREMENT:
+      return { ...state, followsCount: state.followsCount - 1 }
     default:
       return state
   }
 }
 
 export const fetchFlights = () => ({ type: FETCH_FLIGHTS })
+export const setNewDate = (newDate: string) => ({
+  type: SET_DATE,
+  newDate,
+})
 export const handleIsLoading = (isLoading: boolean) => ({
   type: SET_ISLOADING,
   isLoading: isLoading,

@@ -24,7 +24,6 @@ async function getFlights(departureDate: string): Promise<any> {
         'X-RapidAPI-Key': '0a0a124bdbmsha5a636763687650p1112f0jsn84037de75702',
       },
     })
-    console.log(flights.data)
     return flights
   } catch (error) {
     console.log(error)
