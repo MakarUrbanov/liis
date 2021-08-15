@@ -33,8 +33,8 @@ export function flightsDto(object: IFlightsProps): IFligthDto[] {
     newArr[i] = {
       symbol: object.Currencies[0].Symbol,
       price: object.Quotes[i].MinPrice,
-      from: `${object.Places[0].CityName} (${object.Places[0].IataCode})`,
-      to: `${object.Places[1].CityName} (${object.Places[1].IataCode})`,
+      from: `${object.Places[1].CityName} (${object.Places[1].IataCode})`,
+      to: `${object.Places[0].CityName} (${object.Places[0].IataCode})`,
       carrier: object.Carriers[i].Name,
       follow: false,
       departure: departureDate[0],
